@@ -1,0 +1,22 @@
+FROM node:16-alpine
+WORKDIR /app
+COPY package.json /app
+RUN npm i
+RUN npm i -g typescript@5.1.6
+COPY . /app
+
+ARG PORT
+ENV PORT $PORT
+
+ARG PG_URI
+ENV PG_URI $PG_URI
+
+ARG AWS_ACCESS_KEY
+ENV AWS_ACCESS_KEY $AWS_ACCESS_KEY
+
+ARG AWS_ACCESS_SECRET
+ENV AWS_ACCESS_SECRET $AWS_ACCESS_SECRET
+
+RUN npm run build
+EXPOSE 5002
+CMD ["npm", "start"]
