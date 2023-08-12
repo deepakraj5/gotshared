@@ -1,0 +1,31 @@
+# This workflow will build docker file to verify the build
+
+name: Build Docker to verify the build
+
+on:
+  pull_request:
+    types: [opened, reopened]
+
+env:
+  ECR_REPOSITORY: got-shared
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    environment: dev
+
+    steps: 
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Build, tag
+      id: build-image
+      env:
+        IMAGE_TAG: ${{ github.sha }}
+      run: |
+        # Build a docker container
+        docker build -t local_build/$ECR_REPOSITORY:$IMAGE_TAG .
