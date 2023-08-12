@@ -8,7 +8,7 @@ on:
 
 env:
   AWS_REGION: ap-south-1
-  ECR_REPOSITORY: public.ecr.aws/k3c4h3l9/got-shared
+  ECR_REPOSITORY: got-shared
 
 permissions:
   contents: read
