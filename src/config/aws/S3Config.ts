@@ -1,4 +1,7 @@
 import { S3, S3ClientConfig } from "@aws-sdk/client-s3";
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const s3ClientConfig: S3ClientConfig = {
     credentials: {

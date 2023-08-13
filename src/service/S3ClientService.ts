@@ -2,7 +2,6 @@ import { injectable } from "inversify";
 import { S3Config } from "../config/aws/S3Config";
 import { S3UploadFileDTO } from "../dto/S3UploadFileDTO";
 import { S3Client } from "../infrastructure/service/S3Client";
-import { io } from "../index";
 
 export type S3CreateBucketOptions = {
     bucket: string;

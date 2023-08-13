@@ -28,8 +28,6 @@ export class UploadController extends BaseHttpController {
     @httpPost('/')
     public async uploadFile(@request() req: Request, @response() res: Response): Promise<any> {
         try {
-            
-            console.log('File upload request received')
 
             const { file, name, format, userId, email } = req.body
 

@@ -2,7 +2,6 @@ import { inject, injectable } from "inversify";
 import TYPES from "../config/inversify/types";
 import { S3Client } from "../infrastructure/service/S3Client";
 import { Upload } from "../entity/Upload";
-import { v4 as uuidv4 } from 'uuid'
 
 export type UploadFileDTO = {
     file: string;
@@ -11,6 +10,8 @@ export type UploadFileDTO = {
     email: string;
     userId?: string;
 }
+
+const BASE_URI = `https://get-transfer.s3.ap-south-1.amazonaws.com`
 
 @injectable()
 export class UploadService {
@@ -25,10 +26,12 @@ export class UploadService {
             name: data.name
         })
         
-        const upload = new Upload(
-            data.name, `https://get-transfer.s3.ap-south-1.amazonaws.com/${data.file}.${data.format}`, data.email
-        )
-        
+        const upload = new Upload()
+
+        upload.name = data.name
+        upload.url = `${BASE_URI}/${data.name}.${data.format}`
+        upload.email = data.email
+
         return await upload.save()
     }
 }

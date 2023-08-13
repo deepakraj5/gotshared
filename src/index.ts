@@ -43,17 +43,11 @@ export const io = new Server(expressServer, {
     cors: { origin: '*' }
 })
 
-export let connectedClients: any[] = []
 
 io.on('connection', (socket) => {
-    socket.on('join', () => {
-        connectedClients.push(socket.id)
-        socket.join(socket.id)
-    })
 })
 
 io.on('disconnect', (socket) => {
-    connectedClients = connectedClients.filter(data => data === socket.id)
 })
 
 expressServer.listen(PORT, () => {
