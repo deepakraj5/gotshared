@@ -1,4 +1,4 @@
-# This workflow will build docker file to verify the build
+# This workflow will build docker file to verify the build only on pull request
 
 name: Build Docker to verify the build
 
