@@ -28,4 +28,4 @@ jobs:
         IMAGE_TAG: ${{ github.sha }}
       run: |
         # Build a docker container
-        docker build -t local_build/$ECR_REPOSITORY:$IMAGE_TAG --build-arg PORT=5002 .
+        docker build -t local_build/$ECR_REPOSITORY:$IMAGE_TAG --build-arg PORT=5002 AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY_ID }} AWS_ACCESS_SECRET=${{ secrets.AWS_SECRET_ACCESS_KEY }} PG_URI=${{ secrets.PG_URI }} .
