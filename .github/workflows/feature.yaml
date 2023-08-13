@@ -3,7 +3,8 @@
 name: Build Docker to verify the build
 
 on:
-  push
+  push:
+    branches-ignore: ['main']
 
 env:
   ECR_REPOSITORY: got-shared
