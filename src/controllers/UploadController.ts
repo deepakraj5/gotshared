@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { inject } from "inversify";
-import { BaseHttpController, controller, httpPost, request, response } from "inversify-express-utils";
+import { BaseHttpController, controller, httpGet, httpPost, request, response } from "inversify-express-utils";
 import TYPES from "../config/inversify/types";
 import { UploadService } from "../service/UploadService";
 
@@ -10,6 +10,19 @@ export class UploadController extends BaseHttpController {
         @inject(TYPES.UploadService) private readonly uploadService: UploadService
     ) {
         super()
+    }
+
+    @httpGet('/')
+    public async getSample(@request() req: Request, @response() res: Response): Promise<any> {
+        try {
+            res.status(200).send({
+                message: 'sample controller'
+            })
+        } catch (error) {
+            res.status(500).send({
+                message: 'Internal server error'
+            })
+        }
     }
 
     @httpPost('/')
