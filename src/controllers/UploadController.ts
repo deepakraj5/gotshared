@@ -16,7 +16,7 @@ export class UploadController extends BaseHttpController {
     public async getSample(@request() req: Request, @response() res: Response): Promise<any> {
         try {
             res.status(200).send({
-                message: 'sample controller'
+                message: 'sample controller v1'
             })
         } catch (error) {
             res.status(500).send({
