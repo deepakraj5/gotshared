@@ -3,8 +3,7 @@
 name: Build Docker to verify the build
 
 on:
-  pull_request:
-    types: [opened, reopened]
+  push
 
 env:
   ECR_REPOSITORY: got-shared
