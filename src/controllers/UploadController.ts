@@ -3,6 +3,11 @@ import { inject } from "inversify";
 import { BaseHttpController, controller, httpGet, httpPost, request, response } from "inversify-express-utils";
 import TYPES from "../config/inversify/types";
 import { UploadService } from "../service/UploadService";
+import multer from 'multer'
+
+const upload = multer({
+
+})
 
 @controller('/api/v1/upload')
 export class UploadController extends BaseHttpController {
@@ -25,11 +30,12 @@ export class UploadController extends BaseHttpController {
         }
     }
 
-    @httpPost('/')
-    public async uploadFile(@request() req: Request, @response() res: Response): Promise<any> {
+    @httpPost('/', upload.single('file'))
+    public async uploadFile(@request() req: Request,  @response() res: Response): Promise<any> {
         try {
 
-            const { file, name, format, userId, email } = req.body
+            const { name, format, email } = req.body
+            const file = req.file?.buffer as any
 
             const uploadDetails = await this.uploadService.uploadFile({
                 file,

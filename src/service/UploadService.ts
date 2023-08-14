@@ -29,7 +29,7 @@ export class UploadService {
         const upload = new Upload()
 
         upload.name = data.name
-        upload.url = `${BASE_URI}/${data.name}.${data.format}`
+        upload.url = `${BASE_URI}/${data.name}`
         upload.email = data.email
 
         return await upload.save()
