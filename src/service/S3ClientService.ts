@@ -2,7 +2,6 @@ import { injectable } from "inversify";
 import { S3Config } from "../config/aws/S3Config";
 import { S3UploadFileDTO } from "../dto/S3UploadFileDTO";
 import { S3Client } from "../infrastructure/service/S3Client";
-import { io } from "../index";
 
 export type S3CreateBucketOptions = {
     bucket: string;
@@ -18,7 +17,7 @@ export class S3ClientService implements S3Client {
             const expireDate = date.setHours(date.getHours() + 1)
             await S3Config.putObject({
                 Bucket: 'get-transfer',
-                Key: `${options.name}.${options.format}`,
+                Key: `${options.name}`,
                 Body: Buffer.from(options.file, 'base64'),
                 ContentEncoding: 'base64',
                 Expires: new Date(expireDate)
