@@ -1,14 +1,13 @@
-# This workflow will build and push a new container image to Amazon ECR
+# This workflow will build and push a new container image to Docker Hub
 
-name: Deploy to AWS ECR
+name: Deploy to Docker Hub
 
 on:
   push:
     branches: [ "main" ]
 
 env:
-  AWS_REGION: ap-south-1
-  ECR_REPOSITORY: got-shared
+  DOCKER_REPOSITORY: got-shared
 
 permissions:
   contents: read
@@ -23,25 +22,20 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
+    - name: Log in to Docker Hub
+      uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
       with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ env.AWS_REGION }}
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Login to Amazon ECR
-      id: login-ecr
-      uses: aws-actions/amazon-ecr-login@v1
-
-    - name: Build, tag, and push image to Amazon ECR
+    - name: Build, tag, and push image to Docker Hub
       id: build-image
       env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        DOCKER_REGISTRY: deepakdocker04
         IMAGE_TAG: latest
       run: |
         # Build a docker container and
-        # push it to ECR
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG --build-arg PORT=5002 --build-arg AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY_ID }} --build-arg AWS_ACCESS_SECRET=${{ secrets.AWS_SECRET_ACCESS_KEY }} --build-arg PG_URI=${{ secrets.PG_URI }} .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+        # push it to Docker Hub
+        docker build -t $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG --build-arg PORT=5002 --build-arg AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY_ID }} --build-arg AWS_ACCESS_SECRET=${{ secrets.AWS_SECRET_ACCESS_KEY }} --build-arg PG_URI=${{ secrets.PG_URI }} .
+        docker push $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG
+        echo "image=$DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
