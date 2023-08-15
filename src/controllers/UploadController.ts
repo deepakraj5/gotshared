@@ -37,6 +37,8 @@ export class UploadController extends BaseHttpController {
             const { name, format, email } = req.body
             const file = req.file?.buffer as any
 
+            console.log('Uploading to S3......')
+
             const uploadDetails = await this.uploadService.uploadFile({
                 file,
                 name,
