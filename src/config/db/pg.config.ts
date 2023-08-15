@@ -7,6 +7,6 @@ dotenv.config()
 export const AppDataStore = new DataSource({
     type: 'postgres',
     url: process.env.PG_URI,
-    logging: true,
+    logging: false,
     entities: [Upload],
 })
