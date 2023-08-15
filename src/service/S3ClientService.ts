@@ -17,7 +17,7 @@ export class S3ClientService implements S3Client {
             const expireDate = date.setHours(date.getHours() + 1)
             await S3Config.putObject({
                 Bucket: 'get-transfer',
-                Key: `${options.name}`,
+                Key: `${options.email}/${options.name}`,
                 Body: Buffer.from(options.file, 'base64'),
                 ContentEncoding: 'base64',
                 Expires: new Date(expireDate)
