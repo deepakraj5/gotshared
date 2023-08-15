@@ -20,10 +20,11 @@ export class UploadService {
     ) {}
 
     public async uploadFile(data: UploadFileDTO): Promise<Upload> {
-        await this.s3Client.uploadObject({
+        this.s3Client.uploadObject({
             file: data.file,
             format: data.format,
-            name: data.name
+            name: data.name,
+            email: data.email
         })
         
         const upload = new Upload()

@@ -1,5 +1,6 @@
 export interface S3UploadFileDTO {
     file: string,
     name: string,
-    format: string
+    format: string,
+    email: string,
 }
