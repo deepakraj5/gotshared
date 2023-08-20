@@ -6,7 +6,6 @@ import { UploadService } from "../service/UploadService";
 import multer from 'multer'
 
 const upload = multer({
-
 })
 
 @controller('/api/v1/upload')
@@ -30,18 +29,17 @@ export class UploadController extends BaseHttpController {
         }
     }
 
-    @httpPost('/', upload.single('file'))
+    @httpPost('/', upload.array('file'))
     public async uploadFile(@request() req: Request,  @response() res: Response): Promise<any> {
         try {
 
-            const { name, format, email } = req.body
-            const file = req.file?.buffer as any
+            const { email, name } = req.body
+            const files = req.files as any
 
             const uploadDetails = await this.uploadService.uploadFile({
-                file,
-                name,
-                format,
-                email
+                files,
+                email,
+                name
             })
 
             res.status(200).send({
